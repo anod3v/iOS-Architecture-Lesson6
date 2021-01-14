@@ -262,7 +262,7 @@ protocol AlamofireServiceInterface {
     func getComments(ownerId: Int, postId: Int, delegate: VkApiCommentsDelegate)
 }
 
-class AlamofireServiceProxy {
+class AlamofireServiceProxy: AlamofireServiceInterface {
     
     let alamofireService = AlamofireService.instance
     

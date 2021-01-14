@@ -40,7 +40,7 @@ protocol VkApiCommentsDelegate {
 }
 
 
-class AlamofireService {
+class AlamofireService: AlamofireServiceInterface {
     
     static let instance = AlamofireService()
     private init(){}
@@ -54,7 +54,7 @@ class AlamofireService {
             "access_token": Session.instance.token,
             "fields": "id,nickname,photo_100,status",
             "v": "3.0",
-            ]
+        ]
         
         Alamofire.request(fullRow, method: .get, parameters: params)
             .responseJSON(queue: DispatchQueue.global(qos: .userInteractive)) { response in
@@ -248,5 +248,59 @@ class AlamofireService {
         }
     }
     
+}
+
+protocol AlamofireServiceInterface {
+    func getFriends(delegate: VkApiFriendsDelegate)
+    func getGroups(delegate: VkApiGroupsDelegate)
+    func leaveGroup(gid: Int, delegate: VkApiGroupsDelegate)
+    func joinGroup(gid: Int, delegate: VkApiGroupsDelegate)
+    func searchGroups(search: String, delegate: VkApiGroupsDelegate)
+    func getPhotos(delegate: VkApiPhotosDelegate)
+    func getPhotosBy(_ id: Int, delegate: VkApiPhotosDelegate)
+    func getNews(startFrom: String, delegate: VkApiFeedsDelegate)
+    func getComments(ownerId: Int, postId: Int, delegate: VkApiCommentsDelegate)
+}
+
+class AlamofireServiceProxy {
+    
+    let alamofireService = AlamofireService.instance
+    
+    func getFriends(delegate: VkApiFriendsDelegate) {
+        alamofireService.getFriends(delegate: delegate)
+        print("func getFriends(delegate: VkApiFriendsDelegate) is logged")
+    }
+    func getGroups(delegate: VkApiGroupsDelegate) {
+        alamofireService.getGroups(delegate: delegate)
+        print("func getGroups(delegate: VkApiGroupsDelegate) is logged")
+    }
+    func leaveGroup(gid: Int, delegate: VkApiGroupsDelegate) {
+        alamofireService.leaveGroup(gid: gid, delegate: delegate)
+        print("func leaveGroup(delegate: VkApiGroupsDelegate) is logged")
+    }
+    func joinGroup(gid: Int, delegate: VkApiGroupsDelegate) {
+        alamofireService.joinGroup(gid: gid, delegate: delegate)
+        print("func joinGroup(delegate: VkApiGroupsDelegate) is logged")
+    }
+    func searchGroups(search: String, delegate: VkApiGroupsDelegate) {
+        alamofireService.searchGroups(search: search, delegate: delegate)
+        print("func searchGroups(delegate: VkApiGroupsDelegate) is logged")
+    }
+    func getPhotos(delegate: VkApiPhotosDelegate) {
+        alamofireService.getPhotos(delegate: delegate)
+        print("func getPhotos(delegate: VkApiPhotosDelegate) is logged")
+    }
+    func getPhotosBy(_ id: Int, delegate: VkApiPhotosDelegate) {
+        alamofireService.getPhotosBy(id, delegate: delegate)
+        print("func getPhotosBy(delegate: VkApiPhotosDelegate) is logged")
+    }
+    func getNews(startFrom: String, delegate: VkApiFeedsDelegate) {
+        alamofireService.getNews(startFrom: startFrom, delegate: delegate)
+        print("func getNews(delegate: VkApiFeedsDelegate) is logged")
+    }
+    func getComments(ownerId: Int, postId: Int, delegate: VkApiCommentsDelegate) {
+        alamofireService.getComments(ownerId: ownerId, postId: postId, delegate: delegate)
+        print("func getComments(delegate: VkApiCommentsDelegate) is logged")
+    }
 }
 

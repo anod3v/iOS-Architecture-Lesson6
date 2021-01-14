@@ -16,6 +16,7 @@ class NewsViewController: UIViewController {
 //    private let exampleCell = NewsTableViewCell()
     private var textHeight: CGFloat = 0
     private var imageHeight: CGFloat = 0
+    private let alamofireServiceProxy = AlamofireServiceProxy()
     
     
     private var feeds = [VkFeed]()
@@ -53,7 +54,7 @@ class NewsViewController: UIViewController {
     private func prepareGetFeeds(needClearNews: Bool) {
         isLoad = true
         self.needClearNews = needClearNews
-        AlamofireService.instance.getNews(startFrom: needClearNews ? "":startFrom, delegate: self)
+        alamofireServiceProxy.getNews(startFrom: needClearNews ? "":startFrom, delegate: self)
     }
     
     
